@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+  <title>Page 1</title>
+</head>
+
+<script type='text/javascript'>
+ $(document).ready(function() {
+   $('input[name=animalselect]').change(function(){
+     $('form').submit();
+   });
+});
+</script>
+<body>
+    {{with $1:=.PageContacts}}
+    <h1>how u doin?</h1>
+    <div>
+        <ul>
+         {{range $1}}
+            <li> {{.Name}} {{.Phone}} </li>
+         {{end}}
+        </ul>
+    </div>
+
+  <p> Someone new </p>
+  
+    <div>
+        <form action="/selected" method="post">
+            <input type="text" placeholder="Name">
+            <input type="text" placeholder="Phone">
+        </form>
+    </div>
+    {{end}}
+</body>
+</html>
