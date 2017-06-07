@@ -30,6 +30,7 @@
         <form action="/selected" method="post">
             <input type="text" placeholder="Name">
             <input type="text" placeholder="Phone">
+            <input type="button" value="Add" {{if .IsClicked}}clicked{{end}}>
         </form>
     </div>
     {{end}}
