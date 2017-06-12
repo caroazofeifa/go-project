@@ -6,16 +6,9 @@
   <title>Page 1</title>
 </head>
 
-<script type='text/javascript'>
- $(document).ready(function() {
-   $('input[name=animalselect]').change(function(){
-     $('form').submit();
-   });
-});
-</script>
 <body>
     {{with $1:=.PageContacts}}
-    <h1>how u doin?</h1>
+    <h1>Contacts</h1>
     <div>
         <ul>
          {{range $1}}
@@ -24,13 +17,15 @@
         </ul>
     </div>
 
-  <p> Someone new </p>
+  <p> Add new contact </p>
   
     <div>
-        <form action="/selected" method="post">
-            <input type="text" placeholder="Name">
-            <input type="text" placeholder="Phone">
-            <input type="button" value="Add" {{if .IsClicked}}clicked{{end}}>
+        <form action="/add" method="post">
+            <label for="name">Name: </label>
+            <input name="name" id="name" value="Mom">
+            <label for="number">Phone number: </label>
+            <input name="number" value="88">
+            <button id="btnadad">Add</button>
         </form>
     </div>
     {{end}}

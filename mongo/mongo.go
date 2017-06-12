@@ -17,8 +17,33 @@ type PageVariables struct {
 func main() {
         //SERVER
 	    http.HandleFunc("/", getContacts)
-            //http.HandleFunc("/add", postContacts)
+            http.HandleFunc("/add", postContacts)
 	    log.Fatal(http.ListenAndServe(":8082", nil))       
+}
+
+func postContacts(w http.ResponseWriter, r *http.Request){
+        //MONGO
+        fmt.Println("Insert data from request")
+        r.ParseForm()
+        //fmt.Println(r)
+        var name = r.Form.Get("name")
+        var phone = r.Form.Get("number")
+        // fmt.Println(name)
+        // fmt.Println(phone)
+
+        session, err := mgo.Dial("localhost:27017/contacts")
+        if err != nil {
+                panic(err)
+        }
+        defer session.Close()
+        // Optional. Switch the session to a monotonic behavior.
+        session.SetMode(mgo.Monotonic, true)
+        c := session.DB("contacts").C("people")
+        err = c.Insert(&Person{name, phone})
+        if err != nil {
+                log.Fatal(err)
+        }
+        getContacts(w,r)
 }
 func getContacts(w http.ResponseWriter, r *http.Request){
         //MONGO
@@ -33,19 +58,18 @@ func getContacts(w http.ResponseWriter, r *http.Request){
         c := session.DB("contacts").C("people")
 
         var m []bson.M
-        var x = c.Find(nil).All(&m)
-        fmt.Println(x)
+        var _ = c.Find(nil).All(&m)
+        // fmt.Println(x)
         slicePerson := make([]Person, 0)
-        for i,v := range m {
+        for _,v := range m {
                 var name interface{}  = v["name"]
                 var phone interface{} = v["phone"]
                 slicePerson = append(slicePerson, Person{name.(string), phone.(string)})
-                fmt.Println(i)
         }
 
         MyContacts := slicePerson
 
-        fmt.Println("MyContacts;",slicePerson)
+        // fmt.Println("MyContacts;",slicePerson)
         MyPageVariables := PageVariables{ 
                 PageContacts : MyContacts,
         }
@@ -58,33 +82,4 @@ func getContacts(w http.ResponseWriter, r *http.Request){
         if err != nil { 
                 log.Print("index executing error: ", err) 
   	}
-}
-func postContacts(w http.ResponseWriter, r *http.Request){
-        //MONGO
-        fmt.Println("Insert data from request")
-
-        // r.ParseForm()
-        // // r.Form is now either
-        // // map[animalselect:[cats]] OR
-        // // map[animalselect:[dogs]]
-        // // so get the animal which has been selected
-        // youranimal := r.Form.Get("animalselect")
-
-        // getContacts();
-
-        /*session, err := mgo.Dial("localhost:27017/contacts")
-        if err != nil {
-                panic(err)
-        }
-        defer session.Close()
-
-        // Optional. Switch the session to a monotonic behavior.
-        session.SetMode(mgo.Monotonic, true)
-
-        c := session.DB("contacts").C("people")
-        err = c.Insert(&Person{"Ale", "+55 53 8116 9639"},
-	               &Person{"Cla", "+55 53 8402 8510"})
-        if err != nil {
-                log.Fatal(err)
-        }*/
 }
