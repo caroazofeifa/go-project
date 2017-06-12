@@ -5,14 +5,50 @@
   <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
   <title>Page 1</title>
 </head>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#btnUpdate').click(  function () {
+            var sendData = $('#data').val();
+            $.ajax({
+                url: 'http://localhost:8082/',    //Your api url
+                type: 'PUT',   //type is any HTTP method
+                data: {
+                    data: sendData
+                },      //Data as js object
+                success: function () {
+                }
+            });
+        });
+    }); 
+    $(document).ready(function() {
+        $('#btnUpdate').click(  function () {
+            var sendData = $('#data').val();
+            $.ajax({
+                url: 'http://localhost:8082/',    //Your api url
+                type: 'DELETE',   //type is any HTTP method
+                data: {
+                    data: sendData
+                },      //Data as js object
+                success: function () {
+                }
+            });
+        });
+    }); 
+</script>
 <body>
     {{with $1:=.PageContacts}}
     <h1>Contacts</h1>
     <div>
         <ul>
          {{range $1}}
-            <li> {{.Name}} {{.Phone}} </li>
+            <li>  
+                <form>
+                    <input name="name" id="name" value={{.Name}}>
+                    <input name="number" id="numer" value={{.Phone}}>
+                    <button name="btnUpdate" id="btnUpdate" onclick="btnDelete">Update</button>
+                    <button name="btnDelete" id="btnDelete">Delete</button>
+                </form>
+            </li>
          {{end}}
         </ul>
     </div>
@@ -20,12 +56,12 @@
   <p> Add new contact </p>
   
     <div>
-        <form action="/add" method="post">
+        <form action="/" method="post">
             <label for="name">Name: </label>
             <input name="name" id="name" value="Mom">
             <label for="number">Phone number: </label>
             <input name="number" value="88">
-            <button id="btnadad">Add</button>
+            <button id="btnadd">Add</button>
         </form>
     </div>
     {{end}}
