@@ -1,0 +1,40 @@
+body {
+  /*background-color: #787878;*/
+  background-color: #C1C1C3;
+}
+h1 {
+  font-size: 4rem;
+  padding-left: 5rem;
+}
+input {
+  border-radius: 0px;
+  background-color: transparent;
+  border: #C9C9C9;
+  border-bottom: 1px solid #2b4f63;
+  font-size: 18px;
+  justify-content: flex-start;
+  margin: 3rem 1rem 3rem 2rem;
+  line-height: 3rem;
+  outline: none;
+  -webkit-box-shadow: 0 0px 0 rgba(0, 0, 0, 0.03) inset;
+  box-shadow: 0 0px 0 rgba(0, 0, 0, 0.03) inset;
+}
+input:focus {
+  border-bottom: 2px solid #2b4f63;
+}
+li {
+  list-style: none;
+}
+.container {
+  background-color: #F5F5F5;
+  width: 50vw;
+  border-radius: 2rem;
+  margin-top: 3rem;
+}
+.contacts {
+  overflow-y: auto;
+  max-height: 68vh;
+}
+.addSomeone {
+  border-top: 1px solid black;
+}
