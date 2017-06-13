@@ -13,50 +13,7 @@
     crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <style>
-    body {
-      /*background-color: #787878;*/
-      background-color: #C1C1C3;
-    }
-    h1 {
-      font-size: 4rem;
-      padding-left: 5rem;
-    }
-    input {
-      border-radius: 0px;
-      background-color: transparent;
-      border: #C9C9C9;
-      border-bottom: 1px solid #2b4f63;
-      font-size: 18px;
-      justify-content: flex-start;
-      margin: 3rem 1rem 3rem 2rem;
-      line-height: 3rem;
-      outline: none;
-      -webkit-box-shadow: 0 0px 0 rgba(0, 0, 0, 0.03) inset;
-      box-shadow: 0 0px 0 rgba(0, 0, 0, 0.03) inset;
-    }
-    input:focus {
-      border-bottom: 2px solid #2b4f63;
-    }
-    li {
-      list-style: none;
-    }
-    .container {
-      background-color: #F5F5F5;
-      width: 50vw;
-      border-radius: 2rem;
-      margin-top: 3rem;
-    }
-    .contacts {
-      overflow-y: auto;
-      max-height: 68vh;
-    }
-    .addSomeone {
-      border-top: 1px solid black;
-    }
-  </style>
-
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <script type="text/javascript">
   $(document).ready(function () {
@@ -74,7 +31,7 @@
     });
   });
   $(document).ready(function () {
-    $('#btnUpdate').click(function () {
+    $('#btnDelete').click(function () {
       var sendData = $('#data').val();
       $.ajax({
         url: 'http://localhost:8082/',    //Your api url
@@ -98,18 +55,20 @@
         <h1>Contacts</h1>
         <div class="contacts">
           <ul>
+            <div class="row">
             {{range $1}}
-            <div class="form-group">
+            <div class="col-md-12 form-group">
               <li>
                 <form class="form-inline">
                   <input class="" name="name" id="name" value={{.Name}}>
                   <input name="number" id="numer" value={{.Phone}}>
-                  <button class="btn btn-primary" name="btnUpdate" id="btnUpdate" onclick="btnDelete">Update</button>
+                  <button class="btn btn-primary" name="btnUpdate" id="btnUpdate">Update</button>
                   <button class="btn btn-danger" name="btnDelete" id="btnDelete">Delete</button>
                 </form>
               </li>
             </div>
             {{end}}
+            </div>
           </ul>
         </div>
         <div class="addSomeone">
@@ -121,7 +80,7 @@
                   <label for="name"></label>
                   <input name="name" id="name" value="" placeholder="Name">
                   <label for="number"></label>
-                  <input name="number" value="" placeholder="Phone number:">
+                  <input name="number" value="" placeholder="Phone number">
                   <button class="btn btn-success" id="btnadd">Add</button>
                 </form>
               </li>
